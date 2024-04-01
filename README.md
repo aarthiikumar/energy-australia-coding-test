@@ -33,7 +33,7 @@ docker run -p 8080:8080 my-application
 ```
 
 ## API Endpoints
-- `GET /api/mapData`: Fetches data about music festivals and groups them under record labels.
+- `GET /api/musicRecords`: Fetches data about music festivals and groups them under record labels.
 
 ## Error Handling
 The application is designed to handle errors gracefully and return user-friendly error messages.

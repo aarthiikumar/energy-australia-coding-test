@@ -14,6 +14,7 @@ public class FestivalService {
 
     private static final String URI = "https://eacp.energyaustralia.com.au/codingtest/api/v1/festivals";
 
+    // Fetch list of festivals from api
     public List<Festival> fetchFestivals() {
         try {
             RestTemplate restTemplate = new RestTemplate();
@@ -31,6 +32,7 @@ public class FestivalService {
         }
     }
 
+    // Prepare the final list of record labels
     public List<RecordLabel> mapFestivalsToRecordLabels(List<Festival> festivals) {
         Map<String, Map<String, List<String>>> map = new HashMap<>();
 

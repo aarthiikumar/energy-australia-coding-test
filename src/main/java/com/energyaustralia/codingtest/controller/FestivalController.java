@@ -18,8 +18,9 @@ public class FestivalController {
         this.festivalService = festivalService;
     }
 
-    @GetMapping("/mapData")
-    public List<RecordLabel> mapData() {
+    // Returns payload for music record labels
+    @GetMapping("/musicRecords")
+    public List<RecordLabel> getSortedRecordLabelsFromFestivals() {
         List<Festival> festivals = festivalService.fetchFestivals();
 
         if(festivals == null) {

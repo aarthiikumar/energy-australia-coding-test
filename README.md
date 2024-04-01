@@ -14,13 +14,13 @@ This is a Spring Boot application that fetches music festivals data from a provi
 - Clone this repository
 - Inside the project directory, run this command from the terminal to build the app:
 ``` 
-./mvnw clean install
+./gradlew build
 ```
 
 ## How to use 
 - To run your application, use the following command:
 ```
-./mvnw spring-boot:run
+./gradlew bootRun
 ```
 
 ## API Endpoints

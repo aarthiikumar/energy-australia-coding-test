@@ -2,6 +2,7 @@ package com.energyaustralia.codingtest.service;
 
 import com.energyaustralia.codingtest.exception.CustomException;
 import com.energyaustralia.codingtest.model.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestClientException;
@@ -11,15 +12,15 @@ import org.springframework.core.ParameterizedTypeReference;
 
 @Service
 public class FestivalService {
-
-    private static final String URI = "https://eacp.energyaustralia.com.au/codingtest/api/v1/festivals";
+    @Value("${api.url}")
+    private String apiUrl;
 
     // Fetch list of festivals from api
     public List<Festival> fetchFestivals() {
         try {
             RestTemplate restTemplate = new RestTemplate();
             return restTemplate.exchange(
-                    URI,
+                    apiUrl,
                     HttpMethod.GET,
                     null,
                     new ParameterizedTypeReference<List<Festival>>() {

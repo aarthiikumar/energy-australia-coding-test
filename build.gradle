@@ -44,3 +44,17 @@ tasks.named('asciidoctor') {
     inputs.dir snippetsDir
     dependsOn test
 }
+
+task buildDocker(type: Exec) {
+    dependsOn build
+    commandLine 'docker', 'build', '--build-arg', "APPLICATION_FILE=build/libs/${archivesBaseName}-${version}.jar", '-t', "${archivesBaseName}:${version}", '.'
+}
+
+//tasks.named('buildDocker', Exec) {
+//    dependsOn 'build'
+//    doLast {
+//        exec {
+//            commandLine 'docker', 'build', '--build-arg', "APPLICATION_FILE=build/libs/${archivesBaseName}-${version}.jar", '-t', "${archivesBaseName}:${version}", '.'
+//        }
+//    }
+//}

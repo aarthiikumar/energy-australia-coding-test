@@ -6,7 +6,6 @@ public class BandFestivals {
     private String name;
     private List<FestivalName> festivals;
 
-    // Getters and setters...
     public String getName() {
         return name;
     }

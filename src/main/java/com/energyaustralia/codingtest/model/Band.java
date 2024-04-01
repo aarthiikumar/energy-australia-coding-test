@@ -8,7 +8,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 public class Band {
     private String name;
     private String recordLabel;
-    // Getters and setters...
     public String getName() {
         return name;
     }

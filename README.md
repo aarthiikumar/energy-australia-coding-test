@@ -1,5 +1,4 @@
 # Getting Started
-### Reference Documentation
 
 ## Description
 This is a Spring Boot application that fetches music festivals data from a provided API and restructures the data. It groups bands under record labels, and lists the festivals they have played in.
@@ -10,14 +9,24 @@ This is a Spring Boot application that fetches music festivals data from a provi
 
 ## Building and Running
 
-### Locally
 - Clone this repository
+
+### Run with docker
+- Build the Docker image from your Dockerfile:
+```
+docker build -t my-application .
+```
+- And run it:
+```angular2html
+docker run -p 8080:8080 my-application
+```
+
+### Run with gradle
 - Inside the project directory, run this command from the terminal to build the app:
 ``` 
 ./gradlew build
 ```
 
-## How to use 
 - To run your application, use the following command:
 ```
 ./gradlew bootRun

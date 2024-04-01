@@ -7,6 +7,7 @@ plugins {
 
 group = 'com.energyaustralia'
 version = '0.0.1-SNAPSHOT'
+archivesBaseName='energy-australia-coding-test'
 
 java {
     sourceCompatibility = '17'
@@ -49,12 +50,3 @@ task buildDocker(type: Exec) {
     dependsOn build
     commandLine 'docker', 'build', '--build-arg', "APPLICATION_FILE=build/libs/${archivesBaseName}-${version}.jar", '-t', "${archivesBaseName}:${version}", '.'
 }
-
-//tasks.named('buildDocker', Exec) {
-//    dependsOn 'build'
-//    doLast {
-//        exec {
-//            commandLine 'docker', 'build', '--build-arg', "APPLICATION_FILE=build/libs/${archivesBaseName}-${version}.jar", '-t', "${archivesBaseName}:${version}", '.'
-//        }
-//    }
-//}

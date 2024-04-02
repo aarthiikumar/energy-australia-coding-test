@@ -1,19 +1,11 @@
 package com.energyaustralia.codingtest.service;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.when;
-
-import java.util.ArrayList;
-import java.util.List;
 import com.energyaustralia.codingtest.model.Band;
 import com.energyaustralia.codingtest.model.Festival;
 import com.energyaustralia.codingtest.model.RecordLabel;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
-import org.mockito.ArgumentMatchers;
-;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,18 +17,19 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.RestTemplate;
-import org.junit.runner.RunWith;
 
+import java.util.Collections;
+import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @TestPropertySource(properties = {"api.url=https://mock/festivals"})
 public class FestivalServiceTest {
-    private static final Logger logger = LoggerFactory.getLogger(FestivalServiceTest.class);
 
     @MockBean
     private RestTemplate restTemplate;
@@ -44,50 +37,47 @@ public class FestivalServiceTest {
     @Autowired
     private FestivalService service;
 
-    @Test
-    void testMapFestivalsToRecordLabels() {
-        Festival festival = new Festival();
-        festival.setName("Festival1");
-        Band band = new Band();
-        band.setName("Band1");
-        band.setRecordLabel("Record1");
-        festival.setBands(List.of(band));
+    private static final Logger logger = LoggerFactory.getLogger(FestivalServiceTest.class);
 
-        List<RecordLabel> result = service.mapFestivalsToRecordLabels(List.of(festival));
-        // Check that the result is not null
-        assertNotNull(result);
+    private Band band;
+    private List<Festival> expectedFestivals;
 
-        // Check that the result has the correct number of elements
-        assertEquals(1, result.size());
+    @BeforeEach
+    void setUp() {
 
-        // Check that the result contains the correct records
-        assertEquals(result.get(0).getLabel(), band.getRecordLabel());
-    }
-
-    @Test
-    public void fetchFestivals() {
-
-        //given
-        Festival festival = new Festival();
-        festival.setName("Festival1");
-        Band band = new Band();
-        band.setName("Band1");
-        band.setRecordLabel("Record1");
-        festival.setBands(List.of(band));
-        List<Festival> expectedFestivals = new ArrayList<>();
-        expectedFestivals.add(festival);
+        Festival festival = createFestival();
+        expectedFestivals = Collections.singletonList(festival);
         ResponseEntity<List<Festival>> mockResponse = new ResponseEntity<>(expectedFestivals, HttpStatus.OK);
+
         when(restTemplate.exchange(
                 eq("https://mock/festivals"),
                 eq(HttpMethod.GET),
                 eq(null),
-                        ArgumentMatchers.<ParameterizedTypeReference<List<Festival>>>any()))
-
+                eq(new ParameterizedTypeReference<List<Festival>>() {})))
                 .thenReturn(mockResponse);
-        //when
-        List<Festival> actualFestivals = service.fetchFestivals();
+    }
 
-        //then
+    private Festival createFestival() {
+        Festival festival = new Festival();
+        festival.setName("Festival1");
+        band = new Band();
+        band.setName("Band1");
+        band.setRecordLabel("Record1");
+        festival.setBands(Collections.singletonList(band));
+        return festival;
+    }
+
+    @Test
+    void testMapFestivalsToRecordLabels() {
+        List<RecordLabel> result = service.mapFestivalsToRecordLabels(expectedFestivals);
+        assertNotNull(result);
+        assertEquals(1, result.size());
+        assertEquals(band.getRecordLabel(), result.get(0).getLabel());
+    }
+
+    @Test
+    public void testFetchFestivals() {
+        List<Festival> actualFestivals = service.fetchFestivals();
         assertEquals(expectedFestivals, actualFestivals);
     }
 }

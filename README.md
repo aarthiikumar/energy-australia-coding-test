@@ -6,7 +6,17 @@ This is a Spring Boot application that fetches music festivals data from a provi
 ## Prerequisites
 - JDK 17
 - An IDE (like IntelliJ IDEA)
+- Docker
 
+## Configuration
+
+In this project, we have three main configurations for various environments:
+
+1. **Development**: This is the environment for developers to build, test and debug the project.
+2. **Staging**: This environment closely replicates the Production environment. It is used for final testing before deploying the product to Production.
+3. **Production**: This environment is the live product, visible and accessible by the end-users.
+
+   
 ## Building and Running
 
 - Clone this repository
@@ -18,8 +28,9 @@ docker build -t my-application .
 ```
 - And run it:
 ```angular2html
-docker run -p 8080:8080 my-application
+docker run -e "ENV_NAME=${ENV_NAME}" -p 8080:8080 my-application
 ```
+In the above command, we use Docker's -e option to pass the ENV_NAME environment variable to the Docker container
 
 ### Run with gradle
 - Inside the project directory, run this command from the terminal to build the app:

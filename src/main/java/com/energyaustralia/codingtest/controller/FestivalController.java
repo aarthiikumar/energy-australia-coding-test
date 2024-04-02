@@ -18,7 +18,12 @@ public class FestivalController {
         this.festivalService = festivalService;
     }
 
-    // Returns payload for music record labels
+    /**
+     * Retrieves a sorted list of record labels from the festivals.
+     *
+     * @return a sorted list of RecordLabel objects
+     * @throws CustomException if there is an error retrieving the festivals from the server
+     */
     @GetMapping("/musicRecords")
     public List<RecordLabel> getSortedRecordLabelsFromFestivals() {
         List<Festival> festivals = festivalService.fetchFestivals();

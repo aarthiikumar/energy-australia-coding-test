@@ -14,6 +14,10 @@ import java.util.*;
 import org.springframework.core.ParameterizedTypeReference;
 
 
+/**
+ * The FestivalService class is a service class that is responsible for fetching festivals from an API endpoint
+ * and mapping the festivals to record labels.
+ */
 @Service
 public class FestivalService {
     private static final Logger logger = LoggerFactory.getLogger(FestivalService.class);
@@ -28,9 +32,20 @@ public class FestivalService {
         this.restTemplate = restTemplate;
     }
 
+    /**
+     * Fetches the festivals from the API endpoint and returns a list of Festival objects.
+     * The API endpoint is defined by the 'apiUrl' field.
+     *
+     * @return a list of Festival objects
+     * @throws CustomException if there is an error fetching the festivals from the API
+     */
     public List<Festival> fetchFestivals() {
         try {
             logger.info("Fetching Festivals from API endpoint: {}", apiUrl);
+            // https://eacp.energyaustralia.com.au/codingtest/api-docs/#/festivals/APIFestivalsGet
+            // The code below makes a GET request to the API endpoint at 'apiUrl'
+            // (https://eacp.energyaustralia.com.au/codingtest/api/v1/festivals),
+            // expecting a list of Festival objects in return. The response body is extracted and stored in the 'festivals' variable.
             List<Festival> festivals = restTemplate.exchange(
                     apiUrl,
                     HttpMethod.GET,
@@ -49,7 +64,12 @@ public class FestivalService {
         }
     }
 
-    // Prepare the final list of record labels
+    /**
+     * Maps festivals to record labels.
+     *
+     * @param festivals the list of festivals to be mapped
+     * @return a list of record labels
+     */
     public List<RecordLabel> mapFestivalsToRecordLabels(List<Festival> festivals) {
         logger.info("Mapping {} festivals to record labels", festivals.size());
 
